@@ -1,31 +1,35 @@
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import {
+  Dashboard,
+  Bookings,
+  Cabins,
+  Settings,
+  Account,
+  Login,
+  PageNotFound,
+  NewUsers,
+} from './pages/index';
+
 import GlobalStyles from './styles/GlobalStyles';
-import Button from './ui/Button';
-import Heading from './ui/Heading';
-import Row from './ui/Row';
 
 const App = () => {
   return (
     <>
       <GlobalStyles />
-      <Row type="horizontal">
-        <Heading as="h3">The BAD</Heading>
-        <div>
-          <input type="text" />
-        </div>
-      </Row>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Navigate replace to="dashboard" />} />
 
-      <div>
-        <Button>Check in</Button>
-
-        <Button variation="secondary">Check out</Button>
-      </div>
-
-      <Row>
-        <Heading as="h3">The BAD</Heading>
-        <div>
-          <input type="text" />
-        </div>
-      </Row>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="bookings" element={<Bookings />} />
+          <Route path="cabins" element={<Cabins />} />
+          <Route path="users" element={<NewUsers />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="account" element={<Account />} />
+          <Route path="login" element={<Login />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 };
