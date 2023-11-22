@@ -60,7 +60,7 @@ function CabinRow({ cabin }) {
   } = cabin;
 
   const { isDeleting, deleteCabin } = useDeleteCabin();
-  const { createCabin } = useCreateCabin();
+  const { isCreating, createCabin } = useCreateCabin();
 
   const handleDuplicate = () => {
     createCabin({
@@ -86,7 +86,7 @@ function CabinRow({ cabin }) {
           <span>&mdash;</span>
         )}
         <div>
-          <button onClick={handleDuplicate}>
+          <button onClick={handleDuplicate} disabled={isCreating}>
             <HiSquare2Stack />
           </button>
           <button onClick={() => setShowForm((s) => !s)} disabled={isDeleting}>
