@@ -5,7 +5,7 @@ import FileInput from '../../ui/FileInput';
 import Textarea from '../../ui/Textarea';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createCabin } from '../../services/apiCabins';
+import { createEditCabin } from '../../services/apiCabins';
 import { toast } from 'react-hot-toast';
 import FormRow from '../../ui/FormRow';
 
@@ -21,8 +21,8 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading: isCreating } = useMutation({
-    mutationFn: createCabin,
+  const { mutate: createCabin, isLoading: isCreating } = useMutation({
+    mutationFn: createEditCabin,
     onSuccess: () => {
       toast.success('New Cabin succesfully created!');
       queryClient.invalidateQueries({
@@ -33,8 +33,28 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     onError: (err) => toast.error(err.message),
   });
 
+  const { mutate: editCabin, isLoading: isEditing } = useMutation({
+    mutationFn: ({ newCabinData, id }) => createEditCabin(newCabinData, id),
+    onSuccess: () => {
+      toast.success('Cabin succesfully updated!');
+      queryClient.invalidateQueries({
+        queryKey: ['cabins'],
+      });
+      reset(); // for reseting form after submit
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
+  const isWorking = isCreating || isEditing;
+
   const onSubmit = (data) => {
-    mutate({ ...data, image: data.image[0] });
+    const image = typeof data.image === 'string' ? data.image : data.image[0];
+
+    if (isEditSession) {
+      editCabin({ newCabinData: { ...data, image }, id: editId });
+    } else {
+      createCabin({ ...data, image });
+    }
   };
 
   const onError = (errors) => {
@@ -125,7 +145,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button disabled={isCreating}>
+        <Button disabled={isWorking}>
           {isEditSession ? 'Edit' : 'Create new'} cabin
         </Button>
       </FormRow>
