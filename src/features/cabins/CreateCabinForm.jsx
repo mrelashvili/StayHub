@@ -9,7 +9,7 @@ import { useCreateCabin } from './useCreateCabin';
 import { useEditCabin } from './useEditCabin';
 
 // eslint-disable-next-line react/prop-types
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ cabinToEdit = {}, onClose }) {
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
 
@@ -31,6 +31,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         { newCabinData: { ...data, image }, id: editId },
         {
           onSucces: () => reset(), /// For react-hook-form reseting..  we still can call onSuccess (react query)
+          onClose: onClose && undefined,
         }
       );
     } else {
@@ -38,6 +39,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         { ...data, image },
         {
           onSucces: () => reset(), /// For react-hook-form reseting..  we still can call onSuccess (react query)
+          onClose: onClose && undefined,
         }
       );
     }
@@ -48,7 +50,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit, onError)}
+      type={onClose ? 'modal' : 'regular'}
+    >
       <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input
           type="text"
@@ -128,7 +133,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        {/* /// onClose?.() -> if onClose is undefined, function will not be called
+          for example: if we want to use CreateCabinForm but not inside modal..
+         ....*/}
+        <Button variation="secondary" type="reset" onClick={() => onClose?.()}>
           Cancel
         </Button>
         <Button disabled={isWorking}>
