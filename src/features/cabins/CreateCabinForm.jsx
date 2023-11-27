@@ -31,7 +31,7 @@ function CreateCabinForm({ cabinToEdit = {}, onClose }) {
         { newCabinData: { ...data, image }, id: editId },
         {
           onSucces: () => reset(), /// For react-hook-form reseting..  we still can call onSuccess (react query)
-          onClose: onClose && undefined,
+          onClose: onClose(),
         }
       );
     } else {
@@ -39,7 +39,7 @@ function CreateCabinForm({ cabinToEdit = {}, onClose }) {
         { ...data, image },
         {
           onSucces: () => reset(), /// For react-hook-form reseting..  we still can call onSuccess (react query)
-          onClose: onClose && undefined,
+          onClose: onClose(),
         }
       );
     }
