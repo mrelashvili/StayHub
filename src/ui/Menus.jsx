@@ -82,7 +82,7 @@ function Menus({ children }) {
     <MenusContext.Provider
       value={{ openId, open, close, position, setPosition }}
     >
-      <div>{children}</div>;
+      <div>{children}</div>
     </MenusContext.Provider>
   );
 }
