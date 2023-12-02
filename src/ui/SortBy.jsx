@@ -8,10 +8,8 @@ const SortBy = ({ options }) => {
   const sortBy = searchParams.get('sortBy') || '';
 
   const handleChange = (e) => {
-    searchParams.set('SortBy', e.target.value);
+    searchParams.set('sortBy', e.target.value);
     setSearchparams(searchParams);
-
-    console.log(searchParams);
   };
 
   return (
