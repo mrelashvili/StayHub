@@ -13,12 +13,17 @@ export function useBookings() {
       ? null
       : { field: 'status', value: filterValue };
 
+  /// Sort
+  const sortByRaw = searchParams.get('sortBy') || 'startDate-desc';
+  const [field, direction] = sortByRaw.split('-');
+  const sortBy = { field, direction };
+
   const {
     isLoading,
     data: bookings,
     error,
   } = useQuery({
-    queryKey: ['bookings', filter], /// we need this filter to refetch data on filtering.. like a dependency arr
+    queryKey: ['bookings', filter, sortBy], /// we need this filter & sortBy to refetch data on filtering.. like a dependency arr
     queryFn: () => getBookings({ filter }),
   });
 
