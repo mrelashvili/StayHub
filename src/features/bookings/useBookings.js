@@ -14,7 +14,7 @@ export function useBookings() {
       : { field: 'status', value: filterValue };
 
   /// Sort
-  const sortByRaw = searchParams.get('sortBy') || 'startDate-desc';
+  const sortByRaw = searchParams.get('sortBy' || 'startDate-desc');
   const [field, direction] = sortByRaw.split('-');
   const sortBy = { field, direction };
 
@@ -24,7 +24,7 @@ export function useBookings() {
     error,
   } = useQuery({
     queryKey: ['bookings', filter, sortBy], /// we need this filter & sortBy to refetch data on filtering.. like a dependency arr
-    queryFn: () => getBookings({ filter }),
+    queryFn: () => getBookings({ filter, sortBy }),
   });
 
   return { bookings, error, isLoading };
