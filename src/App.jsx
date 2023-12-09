@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Booking from './pages/Booking';
+import Checkin from './pages/Checkin';
 import {
   Dashboard,
   Bookings,
@@ -42,7 +43,7 @@ const App = () => {
               <Route path="bookings" element={<Bookings />} />
               <Route path="bookings/:bookingId" element={<Booking />} />
 
-              <Route path="checkin/:bookingId" element={<Booking />} />
+              <Route path="checkin/:bookingId" element={<Checkin />} />
 
               <Route path="cabins" element={<Cabins />} />
               <Route path="users" element={<NewUsers />} />
