@@ -20,12 +20,12 @@ export function useBookings() {
 
   const {
     isLoading,
-    data: bookings,
+    data: { data: bookings, count } = {},
     error,
   } = useQuery({
     queryKey: ['bookings', filter, sortBy], /// we need this filter & sortBy to refetch data on filtering.. like a dependency arr
     queryFn: () => getBookings({ filter, sortBy }),
   });
 
-  return { bookings, error, isLoading };
+  return { bookings, error, isLoading, count };
 }
