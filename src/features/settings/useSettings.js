@@ -3,7 +3,7 @@ import { getSettings } from './../../services/apiSettings';
 
 const useSettings = () => {
   const { isLoading, data: settings } = useQuery({
-    queryKey: ['settngs'],
+    queryKey: ['settings'],
     queryFn: getSettings,
   });
 
