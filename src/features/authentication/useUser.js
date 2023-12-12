@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCurrentUser } from '../../services/apiAuth';
-// queryKey: ['booking', bookingId],
-//     queryFn: () => getBooking(bookingId),
+
 export function useUser() {
   const { isLoading, data: user } = useQuery({
     queryKey: ['user'],
