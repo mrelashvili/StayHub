@@ -16,7 +16,15 @@ function LoginForm() {
 
     if (!email || !password) return;
 
-    login({ email, password });
+    login(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail('');
+          setPassword('');
+        },
+      }
+    ); // we can set some options because its mutate function. IN THIS CASE, we reset email/pass fields when credentials are wrong
   }
 
   return (
