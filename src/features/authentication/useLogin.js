@@ -15,7 +15,9 @@ export function useLogin() {
     },
     onError: (err) => {
       console.log('ERROR', err);
-      toast.error('Provided email or password are incorrect');
+      // Show the actual error message from Supabase
+      const errorMessage = err?.message || 'Provided email or password are incorrect';
+      toast.error(errorMessage);
     },
   });
 
